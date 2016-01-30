@@ -2,22 +2,24 @@
 using System.Collections;
 
 public class Map : MonoBehaviour {
-    public GameObject emptyTilePrefab;
     public GameObject alterTilePrefab;
     public GameObject[] tilePrefabs;
 
     public Tile[,] grid { get; set; }
-    public Tile nullTile { get; private set; }
+    public Tile alterTile { get; private set; }
 
-    const int WORLD_SIZE = 5; // must be odd
+    const int WORLD_SIZE = 9; // must be odd
+	Transform tran;
+
+	int nullTileIndexX, nullTileIndexY;
 
     void Awake() {
-        InitMap();
+		tran = transform;
     }
 
     // Use this for initialization
     void Start() {
-
+		InitMap();
     }
 
     void InitMap() {
@@ -33,54 +35,64 @@ public class Map : MonoBehaviour {
             for (int x = 0; x < WORLD_SIZE; x++) {
                 if (x == centerIndex && y == centerIndex) { // alter tile
                     GameObject tileGameObject = Instantiate(alterTilePrefab);
-                    grid[x, y] = new Tile(TileType.Alter, tileGameObject, x, y);
+					tileGameObject.transform.parent = tran;
+					Tile tile = tileGameObject.GetComponent<Tile>();
+					tile.Init (TileType.Alter, x, y);
+					grid[x, y] = tile;
+					alterTile = tile;
                 } else if (x == emptyIndexX && y == emptyIndexY) { // empty tile
-                    GameObject tileGameObject = Instantiate(emptyTilePrefab);
-                    Tile tile = new Tile(TileType.Empty, tileGameObject, x, y);
-                    grid[x, y] = tile;
-                    nullTile = tile;
-                } else { // all other tiles
+                    grid[x, y] = null;
+					nullTileIndexX = x;
+					nullTileIndexY = y;
+                } else { // all other tiles (randomized)
                     int tilePrefabsIndex = Random.Range(0, tilePrefabs.Length);
                     GameObject tilePrefab = tilePrefabs[tilePrefabsIndex];
                     GameObject tileGameObject = Instantiate(tilePrefab);
-                    grid[x, y] = new Tile(TileType.Path, tileGameObject, x, y);
+					tileGameObject.transform.parent = tran;
+					Tile tile = tileGameObject.GetComponent<Tile>();
+					grid[x, y] = tile;
+					tile.Init (TileType.Path, x, y);
                 }
             }
         }
     }
 
     public void MoveTile(Direction direction) {
-        Debug.Log("move");
         int tileOffsetX = 0;
         int tileOffsetY = 0;
         switch (direction) {
             case Direction.Up:
-                if (nullTile.MapIndexY > 0) {
+				if (nullTileIndexY > 0) {
                     tileOffsetY = 1;
                 }
                 break;
             case Direction.Down:
-                if (nullTile.MapIndexY < WORLD_SIZE - 1) {
+				if (nullTileIndexY < WORLD_SIZE - 1) {
                     tileOffsetY = -1;
                 }
                 break;
             case Direction.Left:
-                if (nullTile.MapIndexX < WORLD_SIZE - 1) {
+				if (nullTileIndexX < WORLD_SIZE - 1) {
                     tileOffsetX = -1;
                 }
                 break;
             case Direction.Right:
-                if (nullTile.MapIndexX > 0) {
+				if (nullTileIndexX > 0) {
                     tileOffsetX = 1;
                 }
                 break;
         }
-        Tile tileToMove = grid[nullTile.MapIndexX - tileOffsetX, nullTile.MapIndexY - tileOffsetY];
-        // move tile
-        grid[nullTile.MapIndexX, nullTile.MapIndexY] = tileToMove;
-        grid[tileToMove.MapIndexX, tileToMove.MapIndexY] = nullTile;
-        // set tile index
-        nullTile.SetMapPosition(nullTile.MapIndexX - tileOffsetX, nullTile.MapIndexY - tileOffsetY);
-        tileToMove.SetMapPosition(tileToMove.MapIndexX + tileOffsetX, tileToMove.MapIndexY + tileOffsetY);
+		if (tileOffsetX != 0 || tileOffsetY != 0) {
+			Tile tileToMove = grid[nullTileIndexX - tileOffsetX, nullTileIndexY - tileOffsetY];
+			if (tileToMove != alterTile) {
+				// move tile
+				grid[nullTileIndexX, nullTileIndexY] = tileToMove;
+				grid[tileToMove.MapIndexX, tileToMove.MapIndexY] = null;
+				// set tile index
+				nullTileIndexX = nullTileIndexX - tileOffsetX;
+				nullTileIndexY = nullTileIndexY - tileOffsetY;
+				tileToMove.SetMapPosition(tileToMove.MapIndexX + tileOffsetX, tileToMove.MapIndexY + tileOffsetY, true);
+			}
+		}
     }
 }

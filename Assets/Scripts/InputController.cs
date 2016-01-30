@@ -6,6 +6,7 @@ public enum Direction { Up, Down, Left, Right }
 public class InputController : MonoBehaviour {
 	
     public float moveForce = 10f;
+    public float tileReleaseThreshold = 0.25f;
     public float tileMoveThreshold = 0.25f;
 
     enum inputMode { NONE, PLAYER, MAP }
@@ -15,7 +16,6 @@ public class InputController : MonoBehaviour {
 	Rigidbody2D playerRb;
     Map map;
 
-    bool isTileMoving = false;
     bool isInputReleased = false;
 
 	void Awake() {
@@ -28,7 +28,7 @@ public class InputController : MonoBehaviour {
 	void Update () {
         float axisX = Mathf.Abs(Input.GetAxis("Horizontal"));
         float axisY = Mathf.Abs(Input.GetAxis("Vertical"));
-        if (axisX < tileMoveThreshold && axisY < tileMoveThreshold) {
+		if (axisX <= tileReleaseThreshold && axisY <= tileReleaseThreshold) {
             isInputReleased = true;
         }
 		if (mode == inputMode.PLAYER) {
@@ -52,7 +52,7 @@ public class InputController : MonoBehaviour {
 	
 	void TileUpdate()
 	{
-        if (!isTileMoving && isInputReleased) {
+        if (isInputReleased) {
             float axisX = Input.GetAxis("Horizontal");
             float axisY = Input.GetAxis("Vertical");
             if (axisX > tileMoveThreshold) {
