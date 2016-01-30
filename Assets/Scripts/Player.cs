@@ -13,8 +13,20 @@ public class Player : MonoBehaviour {
 
     Rigidbody2D rb;
     Collider2D pc;
+    Tile storedTile;
 
 	void Awake () {
+
+        InitPlayer();
+
+	}
+	
+	void Update () {
+	
+	}
+
+    void InitPlayer()
+    {
         gameObject.tag = "Player";
         gameObject.name = "Player";
         rb = gameObject.AddComponent<Rigidbody2D>();
@@ -22,9 +34,28 @@ public class Player : MonoBehaviour {
         pc = gameObject.AddComponent<CircleCollider2D>();
         rb.freezeRotation = true;
         rb.drag = 15f;
-	}
-	
-	void Update () {
-	
-	}
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        Tile leavingTile = other.GetComponent<Tile>(); 
+        if (leavingTile != null)
+        {
+            if (storedTile != null) 
+            {
+                //set player to be child of new tile, because is in one
+                gameObject.transform.parent = storedTile.transform;
+                Debug.Log("Player child of tile: " + storedTile.name);
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Tile enteringTile = other.GetComponent<Tile>(); 
+        if (enteringTile != null)
+        {
+            storedTile = enteringTile;
+        }
+    }
 }
