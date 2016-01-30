@@ -35,7 +35,8 @@ public class Map : MonoBehaviour {
                     GameObject tileGameObject = Instantiate(alterTilePrefab);
                     grid[x, y] = new Tile(TileType.Alter, tileGameObject, x, y);
                 } else if (x == emptyIndexX && y == emptyIndexY) { // empty tile
-                    Tile tile = new Tile(TileType.Empty, emptyTilePrefab, x, y);
+                    GameObject tileGameObject = Instantiate(emptyTilePrefab);
+                    Tile tile = new Tile(TileType.Empty, tileGameObject, x, y);
                     grid[x, y] = tile;
                     nullTile = tile;
                 } else { // all other tiles
