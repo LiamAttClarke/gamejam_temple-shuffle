@@ -9,7 +9,12 @@ public class InputController : MonoBehaviour {
 	Player player;
 	Rigidbody2D playerRb;
 	float moveForce = 10f;
-	
+	GameManager gameManager;
+
+	void Awake() {
+		gameManager = GameObject.Find ("Game Manager");
+	}
+
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 		if (player == null)

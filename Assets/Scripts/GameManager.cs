@@ -10,6 +10,15 @@ public class GameManager : MonoBehaviour {
 	const int WORLD_SIZE = 5;
 
 	void Awake() {
+		InitLevel ();
+	}
+
+	// Use this for initialization
+	void Start () {
+
+	}
+
+	void InitLevel() {
 		tiles = new Tile[WORLD_SIZE, WORLD_SIZE];
 		int centerIndex = WORLD_SIZE / 2;
 		int emptyIndexX;
@@ -35,10 +44,5 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-	}
-
-	// Use this for initialization
-	void Start () {
-
 	}
 }
