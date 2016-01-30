@@ -5,11 +5,10 @@ public enum Direction { Up, Down, Left, Right }
 
 public class InputController : MonoBehaviour {
 	
-    public float moveForce = 10f;
     public float tileMoveThreshold = 0.25f;
 
-    enum inputMode { NONE, PLAYER, MAP }
-	inputMode mode { get; set; }
+    public enum inputMode { NONE, PLAYER, MAP }
+    public inputMode mode;
 	
 	Player player;
 	Rigidbody2D playerRb;
@@ -19,10 +18,14 @@ public class InputController : MonoBehaviour {
     bool isInputReleased = false;
 
 	void Awake() {
-        map = GameObject.Find("Map").GetComponent<Map>();
+        //map = GameObject.Find("Map").GetComponent<Map>();
+        mode = inputMode.PLAYER;
+    }
+
+    void Start()
+    {
         player = GameObject.Find("Player").GetComponent<Player>();
         playerRb = player.GetComponent<Rigidbody2D>();
-        mode = inputMode.MAP;
     }
 	
 	void Update () {
@@ -37,17 +40,17 @@ public class InputController : MonoBehaviour {
 			TileUpdate();
 		}    
 	}
-	
+    string str = "";
 	void PlayerUpdate()
 	{
 		if (player != null) {
 			float x = Input.GetAxis("Horizontal");
 			float y = Input.GetAxis("Vertical");
-			
-			playerRb.AddForce(moveForce * new Vector3(x, y, 0));
+
+            playerRb.AddForce(player.moveForce * new Vector3(x, y, 0));
+            //str += x + "\t";
+            //Debug.Log(str);
 		}
-		
-		////////////////////
 	}
 	
 	void TileUpdate()
