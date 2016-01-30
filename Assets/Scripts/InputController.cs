@@ -5,21 +5,16 @@ public enum Direction { Up, Down, Left, Right }
 
 public class InputController : MonoBehaviour {
 	
-	public float tileReleaseThreshold = 0.25f;
-	public float tileMoveThreshold = 0.25f;
-	
 	public enum inputMode { NONE, PLAYER, MAP }
 	public inputMode mode;
 	
 	Player player;
 	Rigidbody2D playerRb;
 	Map map;
-	
-	bool isInputReleased = false;
-	
+
 	void Awake() {
-		//map = GameObject.Find("Map").GetComponent<Map>();
-		mode = inputMode.PLAYER;
+		map = GameObject.Find("Map").GetComponent<Map>();
+		mode = inputMode.MAP;
 	}
 	
 	void Start()
@@ -29,18 +24,13 @@ public class InputController : MonoBehaviour {
 	}
 	
 	void Update () {
-		float axisX = Mathf.Abs(Input.GetAxis("Horizontal"));
-		float axisY = Mathf.Abs(Input.GetAxis("Vertical"));
-		if (axisX <= tileReleaseThreshold && axisY <= tileReleaseThreshold) {
-			isInputReleased = true;
-		}
 		if (mode == inputMode.PLAYER) {
 			PlayerUpdate ();
 		} else if (mode == inputMode.MAP) {
 			TileUpdate();
 		}    
 	}
-	string str = "";
+	//string str = "";
 	void PlayerUpdate()
 	{
 		if (player != null) {
@@ -55,25 +45,26 @@ public class InputController : MonoBehaviour {
 	
 	void TileUpdate()
 	{
-		if (isInputReleased) {
-			float axisX = Input.GetAxis("Horizontal");
-			float axisY = Input.GetAxis("Vertical");
-			if (axisX > tileMoveThreshold) {
+		if (true) {
+			if (Input.GetKeyDown(KeyCode.RightArrow)) 
+			{
 				// right
 				map.MoveTile(Direction.Right);
-				isInputReleased = false;
-			} else if (axisX < -tileMoveThreshold) {
+			} 
+			else if (Input.GetKeyDown(KeyCode.LeftArrow)) 
+			{
 				// left
 				map.MoveTile(Direction.Left);
-				isInputReleased = false;
-			} else if (axisY > tileMoveThreshold) {
+			} 
+			else if (Input.GetKeyDown(KeyCode.UpArrow)) 
+			{
 				// up
 				map.MoveTile(Direction.Up);
-				isInputReleased = false;
-			} else if (axisY < -tileMoveThreshold) {
+			} 
+			else if (Input.GetKeyDown(KeyCode.DownArrow)) 
+			{
 				// down
 				map.MoveTile(Direction.Down);
-				isInputReleased = false;
 			}
 		}	
 	}

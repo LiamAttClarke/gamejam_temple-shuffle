@@ -12,21 +12,22 @@ public class Tile : MonoBehaviour {
     public TileType Type { get; private set; }
     
 	Vector3 targetPosition;
+	float width;
 
 	void Awake() {
 
 	}
 
-
-	public void Init(TileType tileType, int mapIndexX, int mapIndexY) {
+	public void Init(TileType tileType, int mapIndexX, int mapIndexY, float tileWidth) {
 		Type = tileType;
+		width = tileWidth;
 		SetMapPosition (mapIndexX, mapIndexY, false);
 	}
 
     public void SetMapPosition(int x, int y, bool slide) {
         MapIndexX = x;
         MapIndexY = y;
-		targetPosition = new Vector3 (x, y, 0);
+		targetPosition = new Vector3 (x * width, y * width, 0);
 		if (slide) {
 			StartCoroutine("MoveToTarget");
 		} else {
