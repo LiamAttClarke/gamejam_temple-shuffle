@@ -1,44 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum Direction { Up, Down, Left, Right }
+
 public class InputController : MonoBehaviour {
 	
-	enum inputMode { NONE, PLAYER, TILE }
-	inputMode mode = inputMode.PLAYER;
+    public float moveForce = 10f;
+    public float tileMoveThreshold = 0.25f;
+
+    enum inputMode { NONE, PLAYER, MAP }
+	inputMode mode { get; set; }
 	
 	Player player;
 	Rigidbody2D playerRb;
-	float moveForce = 10f;
-	GameManager gameManager;
+    Map map;
+
+    bool isTileMoving = false;
+    bool isInputReleased = false;
 
 	void Awake() {
-		gameManager = GameObject.Find ("Game Manager");
-	}
-
-	void Start () {
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-		if (player == null)
-		{
-			Debug.Log("Player not found.");
-		}
-		playerRb = player.GetComponent<Rigidbody2D>();
-		if (playerRb)
-		{
-			Debug.Log("Rigidbody not added to player.");
-		}
-	}
+        map = GameObject.Find("Map").GetComponent<Map>();
+        player = GameObject.Find("Player").GetComponent<Player>();
+        playerRb = player.GetComponent<Rigidbody2D>();
+        mode = inputMode.MAP;
+    }
 	
 	void Update () {
+        float axisX = Mathf.Abs(Input.GetAxis("Horizontal"));
+        float axisY = Mathf.Abs(Input.GetAxis("Vertical"));
+        if (axisX < tileMoveThreshold && axisY < tileMoveThreshold) {
+            isInputReleased = true;
+        }
 		if (mode == inputMode.PLAYER) {
 			PlayerUpdate ();
-		} else if (mode == inputMode.TILE) {
+		} else if (mode == inputMode.MAP) {
 			TileUpdate();
 		}    
-	}
-	
-	void setInputMode()
-	{
-		
 	}
 	
 	void PlayerUpdate()
@@ -55,6 +52,26 @@ public class InputController : MonoBehaviour {
 	
 	void TileUpdate()
 	{
-		
+        if (!isTileMoving && isInputReleased) {
+            float axisX = Input.GetAxis("Horizontal");
+            float axisY = Input.GetAxis("Vertical");
+            if (axisX > tileMoveThreshold) {
+                // right
+                map.MoveTile(Direction.Right);
+                isInputReleased = false;
+            } else if (axisX < -tileMoveThreshold) {
+                // left
+                map.MoveTile(Direction.Left);
+                isInputReleased = false;
+            } else if (axisY > tileMoveThreshold) {
+                // up
+                map.MoveTile(Direction.Up);
+                isInputReleased = false;
+            } else if (axisY < -tileMoveThreshold) {
+                // down
+                map.MoveTile(Direction.Down);
+                isInputReleased = false;
+            }
+        }	
 	}
 }
