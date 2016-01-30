@@ -15,8 +15,12 @@ public class Tile : MonoBehaviour {
 	Map map;
 	float width;
 
+    BoxCollider2D bc;
+
 	void Awake() {
 		width = GetSize ();
+        bc = gameObject.AddComponent<BoxCollider2D>();
+        bc.isTrigger = true;
 	}
 
 	public void Init(TileType tileType, int mapIndexX, int mapIndexY) {
