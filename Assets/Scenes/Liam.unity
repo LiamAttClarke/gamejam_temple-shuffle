@@ -164,13 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc632fb09ef4dc64baa5b12e1e1e4601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alterTilePrefab: {fileID: 154708, guid: e51796897c05dad4e96520536b546f10, type: 2}
+  alterTilePrefab: {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
   tilePrefabs:
-  - {fileID: 154708, guid: 51078f8561035a54b9277f9c9484b645, type: 2}
-  - {fileID: 154708, guid: 99a7e65222654ae4bab675a757c2c120, type: 2}
-  - {fileID: 154708, guid: fa3f71082620cfe4bb234cf082a2b260, type: 2}
-  - {fileID: 154708, guid: ac0ec1c22d49de84f855ad757ab46279, type: 2}
-  tileWidth: 1
+  - {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
+  worldSize: 5
 --- !u!4 &713705391
 Transform:
   m_ObjectHideFlags: 0

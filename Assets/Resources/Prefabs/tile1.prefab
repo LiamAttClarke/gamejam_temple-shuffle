@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 416876}
   - 212: {fileID: 21288830}
   - 60: {fileID: 6030414}
+  - 114: {fileID: 11430980}
   m_Layer: 0
   m_Name: tile1
   m_TagString: Untagged
@@ -116,6 +117,17 @@ PolygonCollider2D:
       - {x: -.870000005, y: 1.83000004}
       - {x: .75999999, y: 1.83000004}
       - {x: .790000021, y: 1.84000003}
+--- !u!114 &11430980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2c9401652fea24ca1d719bfdbfb77a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21288830
 SpriteRenderer:
   m_ObjectHideFlags: 1

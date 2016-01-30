@@ -11,7 +11,7 @@ public class InputController : MonoBehaviour {
 	Player player;
 	Rigidbody2D playerRb;
 	Map map;
-
+	
 	void Awake() {
 		map = GameObject.Find("Map").GetComponent<Map>();
 		mode = inputMode.MAP;
@@ -45,7 +45,7 @@ public class InputController : MonoBehaviour {
 	
 	void TileUpdate()
 	{
-		if (true) {
+		if (!map.IsMapMoving) {
 			if (Input.GetKeyDown(KeyCode.RightArrow)) 
 			{
 				// right

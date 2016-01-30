@@ -4,18 +4,21 @@ using System.Collections;
 public class Map : MonoBehaviour {
     public GameObject alterTilePrefab;
     public GameObject[] tilePrefabs;
-	public float tileWidth = 1.0f;
 
     public Tile[,] grid { get; set; }
     public Tile alterTile { get; private set; }
+	public int worldSize = 5; // must be odd & greater than 1
+	public bool IsMapMoving { get; set; }
 
-    const int WORLD_SIZE = 5; // must be odd & greater than 1
 	Transform tran;
 
 	int nullTileIndexX, nullTileIndexY;
 
     void Awake() {
 		tran = transform;
+		if (worldSize % 2 == 0) {
+			throw new UnityException("World size must be odd.");
+		}
     }
 
     // Use this for initialization
@@ -24,30 +27,30 @@ public class Map : MonoBehaviour {
     }
 
     void InitMap() {
-        grid = new Tile[WORLD_SIZE, WORLD_SIZE];
-		if (WORLD_SIZE == 1) { // by request
+		grid = new Tile[worldSize, worldSize];
+		if (worldSize == 1) { // by request
 			GameObject tileGameObject = Instantiate(alterTilePrefab);
 			tileGameObject.transform.parent = tran;
 			Tile tile = tileGameObject.GetComponent<Tile>();
-			tile.Init (TileType.Alter, 0, 0, tileWidth);
+			tile.Init (TileType.Alter, 0, 0);
 			grid[0, 0] = tile;
 			alterTile = tile;
 			return;
 		}
-        int centerIndex = WORLD_SIZE / 2;
+		int centerIndex = worldSize / 2;
         int emptyIndexX;
         int emptyIndexY;
         do {
-            emptyIndexX = Random.Range(0, WORLD_SIZE);
-            emptyIndexY = Random.Range(0, WORLD_SIZE);
+			emptyIndexX = Random.Range(0, worldSize);
+			emptyIndexY = Random.Range(0, worldSize);
         } while (emptyIndexX == centerIndex && emptyIndexY == centerIndex);
-        for (int y = 0; y < WORLD_SIZE; y++) {
-            for (int x = 0; x < WORLD_SIZE; x++) {
+		for (int y = 0; y < worldSize; y++) {
+			for (int x = 0; x < worldSize; x++) {
                 if (x == centerIndex && y == centerIndex) { // alter tile
                     GameObject tileGameObject = Instantiate(alterTilePrefab);
 					tileGameObject.transform.parent = tran;
 					Tile tile = tileGameObject.GetComponent<Tile>();
-					tile.Init (TileType.Alter, x, y, tileWidth);
+					tile.Init (TileType.Alter, x, y);
 					grid[x, y] = tile;
 					alterTile = tile;
                 } else if (x == emptyIndexX && y == emptyIndexY) { // empty tile
@@ -61,7 +64,7 @@ public class Map : MonoBehaviour {
 					tileGameObject.transform.parent = tran;
 					Tile tile = tileGameObject.GetComponent<Tile>();
 					grid[x, y] = tile;
-					tile.Init (TileType.Path, x, y, tileWidth);
+					tile.Init (TileType.Path, x, y);
                 }
             }
         }
@@ -77,12 +80,12 @@ public class Map : MonoBehaviour {
                 }
                 break;
             case Direction.Down:
-				if (nullTileIndexY < WORLD_SIZE - 1) {
+				if (nullTileIndexY < worldSize - 1) {
                     tileOffsetY = -1;
                 }
                 break;
             case Direction.Left:
-				if (nullTileIndexX < WORLD_SIZE - 1) {
+				if (nullTileIndexX < worldSize - 1) {
                     tileOffsetX = -1;
                 }
                 break;
