@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InputController : MonoBehaviour {
 
-    enum inputMode { PLAYER, TILE }
+    enum inputMode { NONE, PLAYER, TILE }
     inputMode mode = inputMode.PLAYER;
 
     Player player;
@@ -26,11 +26,12 @@ public class InputController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-        PlayerUpdate();
-        TileUpdate();
-
-    }
+		if (mode == inputMode.PLAYER) {
+			PlayerUpdate ();
+		} else if (mode == inputMode.TILE) {
+			TileUpdate();
+		}    
+	}
 
     void setInputMode()
     {
@@ -53,6 +54,6 @@ public class InputController : MonoBehaviour {
 
     void TileUpdate()
     {
-
+		 
     }
 }
