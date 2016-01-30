@@ -10,7 +10,6 @@ public class InputController : MonoBehaviour {
     Rigidbody2D playerRb;
     float moveForce = 10f;
 
-	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (player == null)
@@ -24,12 +23,9 @@ public class InputController : MonoBehaviour {
         }
 	}
 	
-	// Update is called once per frame
 	void Update () {
-	
         PlayerUpdate();
         TileUpdate();
-
     }
 
     void setInputMode()
