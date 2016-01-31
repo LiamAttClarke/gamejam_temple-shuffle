@@ -53,7 +53,7 @@ public class Door : MonoBehaviour {
                     if (adjacent == null) {
                         State = DoorState.Locked;
                     } else {
-                        state = DoorState.Unlocked;
+                        State = DoorState.Unlocked;
                     }
                 }
                 break;
@@ -64,7 +64,7 @@ public class Door : MonoBehaviour {
                     if (adjacent == null) {
                         State = DoorState.Locked;
                     } else {
-                        state = DoorState.Unlocked;
+                        State = DoorState.Unlocked;
                     }
                 }
                 break;
@@ -75,7 +75,7 @@ public class Door : MonoBehaviour {
                     if (adjacent == null) {
                         State = DoorState.Locked;
                     } else {
-                        state = DoorState.Unlocked;
+                        State = DoorState.Unlocked;
                     }
                 }
                 break;
@@ -86,7 +86,7 @@ public class Door : MonoBehaviour {
                     if (adjacent == null) {
                         State = DoorState.Locked;
                     } else {
-                        state = DoorState.Unlocked;
+                        State = DoorState.Unlocked;
                     }
                 }
                 break;
