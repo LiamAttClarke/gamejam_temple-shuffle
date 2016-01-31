@@ -209,7 +209,7 @@ MonoBehaviour:
   alterTilePrefab: {fileID: 183858, guid: cdb705d66b70ea1488d71b5542197318, type: 2}
   tilePrefabs:
   - {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
-  worldSize: 3
+  worldSize: 5
   WorldBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

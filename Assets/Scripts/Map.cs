@@ -46,7 +46,6 @@ public class Map : MonoBehaviour {
 		// tiles
 		for (int y = 0; y < worldSize; y++) {
 			for (int x = 0; x < worldSize; x++) {
-
                 if (x == centerIndex && y == centerIndex) { // alter tile
                     GameObject tileGameObject = Instantiate(alterTilePrefab);
 					tileGameObject.transform.parent = tran;
@@ -71,7 +70,7 @@ public class Map : MonoBehaviour {
         }
 		GameObject edgePortalPrefab = (GameObject)Resources.Load ("Prefabs/EdgePortal");
 		// portals
-		TileWidth = grid[0, 0].Width;
+		TileWidth = alterTile.Width;
 		float halfTileWidth = TileWidth * 0.5f;
 		float offset = 1.3f;
 		float mapEdge = (worldSize * TileWidth) - halfTileWidth;
