@@ -10,6 +10,7 @@ public class Map : MonoBehaviour {
 	public int worldSize = 5; // must be odd & greater than 1
 	public bool IsMapMoving { get; set; }
 	public float TileWidth { get; private set; }
+    public Bounds WorldBounds;
 
 	Transform tran;
 
@@ -21,6 +22,7 @@ public class Map : MonoBehaviour {
 			throw new UnityException("World size must be odd.");
 		}
         InitMap();
+        GetMapSize();
     }
 
     void InitMap() {
@@ -159,5 +161,21 @@ public class Map : MonoBehaviour {
 				tileToMove.SetMapPosition(tileToMove.MapIndexX + tileOffsetX, tileToMove.MapIndexY + tileOffsetY, true);
 			}
 		}
+    }
+
+    Bounds GetMapSize()
+    {
+        WorldBounds = new Bounds(Vector3.zero, Vector3.zero);
+        foreach (Tile tile in grid){
+            if (tile == null) continue;
+            SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
+            if (WorldBounds.extents == Vector3.zero)
+            {
+                WorldBounds = renderer.bounds;
+            }
+            WorldBounds.Encapsulate(renderer.bounds);
+         }
+        Debug.Log(WorldBounds);
+        return WorldBounds;
     }
 }

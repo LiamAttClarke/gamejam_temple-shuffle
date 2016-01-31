@@ -14,7 +14,9 @@ public class Player : MonoBehaviour
 
     Rigidbody2D rb;
     Collider2D pc;
-    Tile storedTile;
+
+    [HideInInspector]
+    public Tile storedTile;
     public bool isInShuffler = false;
 
     void Awake()
@@ -38,6 +40,9 @@ public class Player : MonoBehaviour
         pc = gameObject.AddComponent<CircleCollider2D>();
         rb.freezeRotation = true;
         rb.drag = 15f;
+
+        storedTile = transform.parent.GetComponent<Tile>();
+        Debug.Log(storedTile.name);
     }
 
     void OnTriggerExit2D(Collider2D other)

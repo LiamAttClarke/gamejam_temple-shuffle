@@ -114,13 +114,16 @@ public class InputController : MonoBehaviour {
 
     void ToggleMode()
     {
+        CamZoom camera = Camera.main.GetComponent<CamZoom>();
         if (mode == inputMode.MAP)
         {
             mode = inputMode.PLAYER;
+            camera.ZoomTo(player.storedTile.transform);
         }
         else if (mode == inputMode.PLAYER)
         {
             mode = inputMode.MAP;
+            camera.ZoomTo(map.transform);
         }
         Debug.Log("Mode: " + mode);
     }
