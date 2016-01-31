@@ -6,7 +6,7 @@ public enum Direction { Up, Down, Left, Right }
 public class InputController : MonoBehaviour {
 	
 	public enum inputMode { PLAYER, MAP, MENU }
-	public inputMode mode;
+    private inputMode mode;
 	
 	Player player;
 	Rigidbody2D playerRb;
@@ -29,11 +29,11 @@ public class InputController : MonoBehaviour {
 	
 	void Update () {
         ModeUpdate();
-		if (mode == inputMode.PLAYER) {
-			PlayerUpdate ();
-		} else if (mode == inputMode.MAP) {
-			TileUpdate();
-		}
+        //if (mode == inputMode.PLAYER) {
+        //    PlayerUpdate ();
+        //} else if (mode == inputMode.MAP) {
+        //    TileUpdate();
+        //}
 	}
 
     void ModeUpdate()
@@ -41,19 +41,29 @@ public class InputController : MonoBehaviour {
         //debug master mode switch
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            Debug.Log("Q");
             ToggleMode();
         }
 
-        //gameplay mode switch
-        float fire1 = Input.GetAxis("Fire1"); //Input.GetAxis lasts several frames
+        //gameplay mode switch /*
+        /*float fire1 = Input.GetAxis("Fire1"); //Input.GetAxis lasts several frames
         if (fire1 != 0 && !fire1happening)
         {
             fire1happening = true;
             if (player != null)
             {
-                if (player.isInShuffler && !map.IsMapMoving)
+                if (player.isInShuffler)
                 {
-                    ToggleMode();
+                    if (map != null && !map.IsMapMoving)
+                    {
+                        Debug.Log("paranoi not happening");
+                        ToggleMode();
+                    }
+                    else
+                    {
+                        Debug.Log("No map object");
+                        ToggleMode();
+                    }
                 }
             }
         }
@@ -64,7 +74,7 @@ public class InputController : MonoBehaviour {
         if (player != null && !player.isInShuffler)
         {
             mode = inputMode.PLAYER;
-        }
+        }*/
     }
 
     void PlayerUpdate()
@@ -110,10 +120,12 @@ public class InputController : MonoBehaviour {
         if (mode == inputMode.MAP)
         {
             mode = inputMode.PLAYER;
+            //Debug.Log("P");
         }
         else if (mode == inputMode.PLAYER)
         {
             mode = inputMode.MAP;
+            //Debug.Log("M");
         }
     }
 }
