@@ -5,17 +5,23 @@ public class Platform : MonoBehaviour {
 
     public Sprite platformUp;
     public Sprite platformDown;
-    bool active = false;
-
     private SpriteRenderer sr;
+    bool active;
+    public bool persists;
+
+    enum Kinds { POPS_BACK_UP, STICKS_DOWN }
+    Kinds kind = Kinds.POPS_BACK_UP;
 
     void Awake()
     {
+        //checks collider
         PolygonCollider2D pc = gameObject.GetComponent<PolygonCollider2D>();
         if (pc == null)
         {
             Debug.Log("manually-created polygon collider intended to exist is missing on: " + gameObject.name);
         }
+
+        //checks sprites
         sr = gameObject.GetComponent<SpriteRenderer>();
         if (platformUp == null)
         {
@@ -25,7 +31,11 @@ public class Platform : MonoBehaviour {
         {
             Debug.Log("platformDown sprite missing on " + gameObject.name);
         }
+
+        //checks state
+        active = false;
         sr.sprite = platformUp;
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
