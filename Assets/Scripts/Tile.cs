@@ -11,10 +11,10 @@ public class Tile : MonoBehaviour {
     public int MapIndexY { get; private set; }
     public TileType Type { get; private set; }
 	public float Width { get; private set;}
+    public GameObject shadow { get; private set; }
     
 	Vector3 targetPosition;
 	Map map;
-
 
     BoxCollider2D bc;
 
@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour {
 		Width = GetBounds().size.x;
         bc = gameObject.AddComponent<BoxCollider2D>();
         bc.isTrigger = true;
+        shadow = transform.Find("Shadow").gameObject;
 	}
 
 	public void Init(TileType tileType, int mapIndexX, int mapIndexY) {
