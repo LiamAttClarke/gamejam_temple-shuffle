@@ -12,6 +12,7 @@ public class InputController : MonoBehaviour {
 	Rigidbody2D playerRb;
 	Map map;
     bool fire1happening = false;
+    //bool debugOverrideSet = false;
 	
 	void Awake() {
         GameObject mapGO = GameObject.Find("Map");
@@ -19,6 +20,7 @@ public class InputController : MonoBehaviour {
             map = mapGO.GetComponent<Map>();
 		}
         mode = inputMode.MAP;
+        Debug.Log("Mode: " + mode);
 	}
 	
 	void Start()
@@ -29,11 +31,14 @@ public class InputController : MonoBehaviour {
 	
 	void Update () {
         ModeUpdate();
-        //if (mode == inputMode.PLAYER) {
-        //    PlayerUpdate ();
-        //} else if (mode == inputMode.MAP) {
-        //    TileUpdate();
-        //}
+        if (mode == inputMode.PLAYER)
+        {
+            PlayerUpdate();
+        }
+        else if (mode == inputMode.MAP)
+        {
+            TileUpdate();
+        }
 	}
 
     void ModeUpdate()
@@ -41,12 +46,13 @@ public class InputController : MonoBehaviour {
         //debug master mode switch
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Q");
             ToggleMode();
+            //debugOverrideSet = true;
+            //Debug.Log("debug on");
         }
 
         //gameplay mode switch /*
-        /*float fire1 = Input.GetAxis("Fire1"); //Input.GetAxis lasts several frames
+        float fire1 = Input.GetAxis("Fire1"); //Input.GetAxis lasts several frames
         if (fire1 != 0 && !fire1happening)
         {
             fire1happening = true;
@@ -56,13 +62,15 @@ public class InputController : MonoBehaviour {
                 {
                     if (map != null && !map.IsMapMoving)
                     {
-                        Debug.Log("paranoi not happening");
                         ToggleMode();
+                        //debugOverrideSet = false;
+                        //Debug.Log("debug off");
                     }
                     else
                     {
-                        Debug.Log("No map object");
                         ToggleMode();
+                        //debugOverrideSet = false;
+                        //Debug.Log("debug off");
                     }
                 }
             }
@@ -71,10 +79,10 @@ public class InputController : MonoBehaviour {
         {
             fire1happening = false;
         }
-        if (player != null && !player.isInShuffler)
-        {
-            mode = inputMode.PLAYER;
-        }*/
+        //if (player != null && !player.isInShuffler && !debugOverrideSet)
+        //{
+        //    mode = inputMode.PLAYER;
+        //}
     }
 
     void PlayerUpdate()
@@ -127,5 +135,6 @@ public class InputController : MonoBehaviour {
             mode = inputMode.MAP;
             //Debug.Log("M");
         }
+        Debug.Log("Mode: " + mode);
     }
 }

@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc632fb09ef4dc64baa5b12e1e1e4601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alterTilePrefab: {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
+  alterTilePrefab: {fileID: 183858, guid: cdb705d66b70ea1488d71b5542197318, type: 2}
   tilePrefabs:
   - {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
   worldSize: 5
@@ -211,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e101c4e8c1ea76429f321c282c4074c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
 --- !u!81 &958006304
 AudioListener:
   m_ObjectHideFlags: 0
@@ -338,43 +337,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!1 &1733769010
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1733769011}
-  - 114: {fileID: 1733769012}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1733769011
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1733769010}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.45126629, y: -6.44159031, z: 26.5856857}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
---- !u!114 &1733769012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1733769010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a1a9b8ac650aaa40ab057a7f8c9a4dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveForce: 40
