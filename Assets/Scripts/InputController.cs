@@ -30,16 +30,14 @@ public class InputController : MonoBehaviour {
 			TileUpdate();
 		}    
 	}
-	//string str = "";
-	void PlayerUpdate()
+
+    void PlayerUpdate()
 	{
 		if (player != null) {
 			float x = Input.GetAxis("Horizontal");
 			float y = Input.GetAxis("Vertical");
 			
 			playerRb.AddForce(player.moveForce * new Vector3(x, y, 0));
-			//str += x + "\t";
-			//Debug.Log(str);
 		}
 	}
 	
