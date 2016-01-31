@@ -10,15 +10,16 @@ public class Tile : MonoBehaviour {
     public int MapIndexX { get; private set; }
     public int MapIndexY { get; private set; }
     public TileType Type { get; private set; }
+	public float Width { get; private set;}
     
 	Vector3 targetPosition;
 	Map map;
-	float width;
+
 
     BoxCollider2D bc;
 
 	void Awake() {
-		width = GetSize ();
+		Width = GetSize ();
         bc = gameObject.AddComponent<BoxCollider2D>();
         bc.isTrigger = true;
 	}
@@ -32,7 +33,7 @@ public class Tile : MonoBehaviour {
     public void SetMapPosition(int x, int y, bool slide) {
         MapIndexX = x;
         MapIndexY = y;
-		targetPosition = new Vector3 (x * width, y * width, 0);
+		targetPosition = new Vector3 (x * Width, y * Width, 0);
 		if (slide) {
 			StartCoroutine("MoveToTarget");
 		} else {
