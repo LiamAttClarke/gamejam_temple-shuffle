@@ -68,7 +68,7 @@ public class Map : MonoBehaviour {
                 }
             }
         }
-		GameObject edgePortalPrefab = (GameObject)Resources.Load ("Prefabs/EdgePortal");
+		/*GameObject edgePortalPrefab = (GameObject)Resources.Load ("Prefabs/EdgePortal");
 		// portals
 		TileWidth = alterTile.Width;
 		float halfTileWidth = TileWidth * 0.5f;
@@ -120,7 +120,7 @@ public class Map : MonoBehaviour {
 			portalLeftBottom.GetComponent<EdgePortal>().Init(portalRightBottom.GetComponent<EdgePortal>());
 			portalRightTop.GetComponent<EdgePortal>().Init(portalLeftTop.GetComponent<EdgePortal>());
 			portalRightBottom.GetComponent<EdgePortal>().Init(portalLeftBottom.GetComponent<EdgePortal>());
-		}
+		}*/
 	}
 	
 	public void MoveTile(Direction direction) {
@@ -167,14 +167,8 @@ public class Map : MonoBehaviour {
         WorldBounds = new Bounds(Vector3.zero, Vector3.zero);
         foreach (Tile tile in grid){
             if (tile == null) continue;
-            SpriteRenderer renderer = tile.GetComponent<SpriteRenderer>();
-            if (WorldBounds.extents == Vector3.zero)
-            {
-                WorldBounds = renderer.bounds;
-            }
-            WorldBounds.Encapsulate(renderer.bounds);
+            WorldBounds.Encapsulate(tile.GetBounds());
          }
-        Debug.Log(WorldBounds);
         return WorldBounds;
     }
 }

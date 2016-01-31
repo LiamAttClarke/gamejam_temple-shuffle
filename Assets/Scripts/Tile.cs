@@ -11,17 +11,18 @@ public class Tile : MonoBehaviour {
     public int MapIndexY { get; private set; }
     public TileType Type { get; private set; }
 	public float Width { get; private set;}
+    public GameObject shadow { get; private set; }
     
 	Vector3 targetPosition;
 	Map map;
 
-
     BoxCollider2D bc;
 
 	void Awake() {
-		Width = GetSize ();
+		Width = GetBounds().size.x;
         bc = gameObject.AddComponent<BoxCollider2D>();
         bc.isTrigger = true;
+        shadow = transform.Find("Shadow").gameObject;
 	}
 
 	public void Init(TileType tileType, int mapIndexX, int mapIndexY) {
@@ -41,8 +42,14 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	float GetSize() {
-		return GetComponent<Collider2D> ().bounds.size.x;
+	public Bounds GetBounds() {
+        var renderer = GetComponent<Renderer>();
+        var combinedBounds = renderer.bounds;
+        var renderers = GetComponentsInChildren<Renderer>();
+        foreach (var render in renderers) {
+            if (render != renderer) combinedBounds.Encapsulate(render.bounds);
+        }
+        return combinedBounds;
 	}
 	
 	IEnumerator MoveToTarget () {

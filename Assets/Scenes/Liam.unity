@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc632fb09ef4dc64baa5b12e1e1e4601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alterTilePrefab: {fileID: 183858, guid: cdb705d66b70ea1488d71b5542197318, type: 2}
+  alterTilePrefab: {fileID: 136930, guid: e58cc840defdc9241b5f1441d2957744, type: 2}
   tilePrefabs:
   - {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
   worldSize: 5
