@@ -20,10 +20,6 @@ public class Map : MonoBehaviour {
 		if (worldSize % 2 == 0) {
 			throw new UnityException("World size must be odd.");
 		}
-    }
-
-    // Use this for initialization
-    void Start() {
 		InitMap();
     }
 
