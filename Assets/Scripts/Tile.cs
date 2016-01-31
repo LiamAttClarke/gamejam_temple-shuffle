@@ -19,7 +19,7 @@ public class Tile : MonoBehaviour {
     BoxCollider2D bc;
 
 	void Awake() {
-		Width = GetSize ();
+		Width = GetBounds().size.x;
         bc = gameObject.AddComponent<BoxCollider2D>();
         bc.isTrigger = true;
 	}
@@ -41,8 +41,14 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	float GetSize() {
-		return GetComponent<Collider2D> ().bounds.size.x;
+	public Bounds GetBounds() {
+        var renderer = GetComponent<Renderer>();
+        var combinedBounds = renderer.bounds;
+        var renderers = GetComponentsInChildren<Renderer>();
+        foreach (var render in renderers) {
+            if (render != renderer) combinedBounds.Encapsulate(render.bounds);
+        }
+        return combinedBounds;
 	}
 	
 	IEnumerator MoveToTarget () {

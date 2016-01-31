@@ -5,7 +5,7 @@ public class CamZoom : MonoBehaviour {
 
     public bool IsZooming { get; private set; }
     float moveSpeed = .5f;
-    float zoomMarginFactor = 1.1f;
+    float zoomMarginFactor = 1.25f;
     Map map;
 
     void Awake() {
@@ -45,7 +45,7 @@ public class CamZoom : MonoBehaviour {
         else if (tile != null)
         {
             targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
-            targetScale = tile.Width * zoomMarginFactor;
+            targetScale = tile.Width / zoomMarginFactor;
         }
         //Debug.Log("scale " + targetScale);
 
