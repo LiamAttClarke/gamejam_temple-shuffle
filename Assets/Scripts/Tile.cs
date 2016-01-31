@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum TileType { Alter, Path }
+public enum TileType { Void, Alter, Path }
 
 public class Tile : MonoBehaviour {
 
@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour {
     
 	Vector3 targetPosition;
 	Map map;
+    Door[] doors;
 
     BoxCollider2D bc;
 
@@ -25,6 +26,11 @@ public class Tile : MonoBehaviour {
         shadow = transform.Find("Shadow").gameObject;
 	}
 
+    void Start() {
+        doors = transform.GetComponentsInChildren<Door>();
+        //UpdateDoors();
+    }
+
 	public void Init(TileType tileType, int mapIndexX, int mapIndexY) {
 		Type = tileType;
 		SetMapPosition (mapIndexX, mapIndexY, false);
@@ -34,7 +40,8 @@ public class Tile : MonoBehaviour {
     public void SetMapPosition(int x, int y, bool slide) {
         MapIndexX = x;
         MapIndexY = y;
-		targetPosition = new Vector3 (x * Width, y * Width, 0);
+        //UpdateDoors();
+        targetPosition = new Vector3 (x * Width, y * Width, 0);
 		if (slide) {
 			StartCoroutine("MoveToTarget");
 		} else {
@@ -60,4 +67,11 @@ public class Tile : MonoBehaviour {
 		}
 		map.IsMapMoving = false;
 	}
+
+    void UpdateDoors() {
+        if (doors == null) return;
+        foreach (Door door in doors) {
+            door.UpdateDoorState();
+        }
+    }
 }

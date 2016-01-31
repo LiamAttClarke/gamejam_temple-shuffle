@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21267070}
   - 61: {fileID: 6135928}
   - 114: {fileID: 11464618}
+  - 95: {fileID: 9561566}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -24,8 +25,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170702}
-  m_LocalRotation: {x: 0, y: 0, z: -0.70710665, w: -0.7071069}
-  m_LocalPosition: {x: -3.85, y: 1.39, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,6 +45,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.39}
   serializedVersion: 2
   m_Size: {x: 1.84, y: 0.22}
+--- !u!95 &9561566
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170702}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f9bb7e04cd742b247a93ec5737d92174, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11464618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,6 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f1bee237cc2404787942822358f7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Orientation: 0
 --- !u!212 &21267070
 SpriteRenderer:
   m_ObjectHideFlags: 1
