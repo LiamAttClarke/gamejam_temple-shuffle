@@ -28,7 +28,6 @@ public class Tile : MonoBehaviour {
 
     void Start() {
         doors = transform.GetComponentsInChildren<Door>();
-        //UpdateDoors();
     }
 
 	public void Init(TileType tileType, int mapIndexX, int mapIndexY) {
@@ -40,7 +39,6 @@ public class Tile : MonoBehaviour {
     public void SetMapPosition(int x, int y, bool slide) {
         MapIndexX = x;
         MapIndexY = y;
-        //UpdateDoors();
         targetPosition = new Vector3 (x * Width, y * Width, 0);
 		if (slide) {
 			StartCoroutine("MoveToTarget");
@@ -68,7 +66,7 @@ public class Tile : MonoBehaviour {
 		map.IsMapMoving = false;
 	}
 
-    void UpdateDoors() {
+    public void UpdateDoors() {
         if (doors == null) return;
         foreach (Door door in doors) {
             door.UpdateDoorState();

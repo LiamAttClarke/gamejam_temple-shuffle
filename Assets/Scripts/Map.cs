@@ -122,44 +122,48 @@ public class Map : MonoBehaviour {
 			portalRightBottom.GetComponent<EdgePortal>().Init(portalLeftBottom.GetComponent<EdgePortal>());
 		}*/
 	}
-	
-	public void MoveTile(Direction direction) {
+
+    public void MoveTile(Direction direction) {
         int tileOffsetX = 0;
         int tileOffsetY = 0;
         switch (direction) {
             case Direction.Up:
-				if (nullTileIndexY > 0) {
+                if (nullTileIndexY > 0) {
                     tileOffsetY = 1;
                 }
                 break;
             case Direction.Down:
-				if (nullTileIndexY < worldSize - 1) {
+                if (nullTileIndexY < worldSize - 1) {
                     tileOffsetY = -1;
                 }
                 break;
             case Direction.Left:
-				if (nullTileIndexX < worldSize - 1) {
+                if (nullTileIndexX < worldSize - 1) {
                     tileOffsetX = -1;
                 }
                 break;
             case Direction.Right:
-				if (nullTileIndexX > 0) {
+                if (nullTileIndexX > 0) {
                     tileOffsetX = 1;
                 }
                 break;
         }
-		if (tileOffsetX != 0 || tileOffsetY != 0) {
-			Tile tileToMove = grid[nullTileIndexX - tileOffsetX, nullTileIndexY - tileOffsetY];
-			if (tileToMove != alterTile) {
-				// move tile
-				grid[nullTileIndexX, nullTileIndexY] = tileToMove;
-				grid[tileToMove.MapIndexX, tileToMove.MapIndexY] = null;
-				// set tile index
-				nullTileIndexX = nullTileIndexX - tileOffsetX;
-				nullTileIndexY = nullTileIndexY - tileOffsetY;
-				tileToMove.SetMapPosition(tileToMove.MapIndexX + tileOffsetX, tileToMove.MapIndexY + tileOffsetY, true);
-			}
-		}
+        if (tileOffsetX != 0 || tileOffsetY != 0) {
+            Tile tileToMove = grid[nullTileIndexX - tileOffsetX, nullTileIndexY - tileOffsetY];
+            if (tileToMove != alterTile) {
+                // move tile
+                grid[nullTileIndexX, nullTileIndexY] = tileToMove;
+                grid[tileToMove.MapIndexX, tileToMove.MapIndexY] = null;
+                // set tile index
+                nullTileIndexX = nullTileIndexX - tileOffsetX;
+                nullTileIndexY = nullTileIndexY - tileOffsetY;
+                tileToMove.SetMapPosition(tileToMove.MapIndexX + tileOffsetX, tileToMove.MapIndexY + tileOffsetY, true);
+            }
+        }
+        foreach (Tile tile in grid) {
+            if (tile == null) continue;
+            tile.UpdateDoors();
+        }
     }
 
     Bounds GetMapSize()
