@@ -18,12 +18,20 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public Tile storedTile;
     public bool isInShuffler = false;
+    CamZoom camZoomer;
+    Map map;
 
     void Awake()
     {
 
         InitPlayer();
 
+    }
+
+    void Start() {
+        map = GameObject.Find("Map").GetComponent<Map>();
+        camZoomer = Camera.main.GetComponent<CamZoom>();
+        camZoomer.ZoomTo(map.alterTile.transform);
     }
 
     void Update()
@@ -42,21 +50,18 @@ public class Player : MonoBehaviour
         rb.drag = 15f;
 
         storedTile = transform.parent.GetComponent<Tile>();
-        Debug.Log(storedTile.name);
+        //Debug.Log(storedTile.name);
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         //tile stuff
         Tile leavingTile = other.GetComponent<Tile>();
-        if (leavingTile != null)
+        if (leavingTile != null && storedTile != null)
         {
-            if (storedTile != null)
-            {
-                //set player to be child of new tile, because is in one
-                gameObject.transform.parent = storedTile.transform;
-                Debug.Log("Player child of tile: " + storedTile.name);
-            }
+            //set player to be child of new tile, because is in one
+            gameObject.transform.parent = storedTile.transform;
+            //Debug.Log("Player child of tile: " + storedTile.name);
         }
 
         //shuffler stuff
@@ -64,7 +69,7 @@ public class Player : MonoBehaviour
         if (shufflerTriggerable != null)
         {
             isInShuffler = false;
-            Debug.Log("not in shuf");
+            //Debug.Log("not in shuf");
         }
     }
 
@@ -74,6 +79,7 @@ public class Player : MonoBehaviour
         if (enteringTile != null)
         {
             storedTile = enteringTile;
+            camZoomer.ZoomTo(storedTile.transform);
         }
     }
 

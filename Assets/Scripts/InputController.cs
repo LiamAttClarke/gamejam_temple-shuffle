@@ -18,8 +18,7 @@ public class InputController : MonoBehaviour {
         if (mapGO!=null) {
             map = mapGO.GetComponent<Map>();
 		}
-        mode = inputMode.MAP;
-        Debug.Log("Mode: " + mode);
+        mode = inputMode.PLAYER;
 	}
 	
 	void Start()
@@ -115,6 +114,7 @@ public class InputController : MonoBehaviour {
     void ToggleMode()
     {
         CamZoom camera = Camera.main.GetComponent<CamZoom>();
+        if (camera.IsZooming) return;
         if (mode == inputMode.MAP)
         {
             mode = inputMode.PLAYER;
@@ -125,6 +125,6 @@ public class InputController : MonoBehaviour {
             mode = inputMode.MAP;
             camera.ZoomTo(map.transform);
         }
-        Debug.Log("Mode: " + mode);
+        //Debug.Log("Mode: " + mode);
     }
 }

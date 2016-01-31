@@ -3,20 +3,22 @@ using System.Collections;
 
 public class CamZoom : MonoBehaviour {
 
-    bool camIsZooming = false;
+    public bool IsZooming { get; private set; }
     float moveSpeed = .5f;
-    float zoomMarginFactor = 1.5f; 
+    float zoomMarginFactor = 1.1f;
+    Map map;
+
+    void Awake() {
+        IsZooming = false;
+    }
 
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
-
-
+        map = GameObject.Find("Map").GetComponent<Map>();
+        Vector3 camStartPos = map.alterTile.transform.position;
+        camStartPos.z = -10f;
+        transform.position = camStartPos;
+    }
 
     public void ZoomTo(Transform target)
     {
@@ -25,7 +27,7 @@ public class CamZoom : MonoBehaviour {
 
     private IEnumerator ZoomIn(Transform target)
     {
-        camIsZooming = true;
+        IsZooming = true;
 
         Vector3 targetPosition = Vector3.zero;
         float targetScale = 1f; 
@@ -36,31 +38,31 @@ public class CamZoom : MonoBehaviour {
         if (map != null)
         {
             targetPosition = new Vector3(map.WorldBounds.center.x, map.WorldBounds.center.y, transform.position.z);
-            float worldSize = map.WorldBounds.extents.y;
-            float margin = (map.TileWidth * zoomMarginFactor - map.TileWidth);
-            targetScale =  worldSize + margin;
+            //float worldSize = map.WorldBounds.extents.y;
+            //float margin = (map.TileWidth * zoomMarginFactor - map.TileWidth);
+            targetScale = map.WorldBounds.size.x / 2;
         }
         else if (tile != null)
         {
             targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
             targetScale = tile.Width * zoomMarginFactor;
         }
-        Debug.Log("scale " + targetScale);
+        //Debug.Log("scale " + targetScale);
 
         float timePercent = 0f;
 
-        while (transform.position != targetPosition)
+        while (transform.position != targetPosition || Camera.main.orthographicSize != targetScale)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed);
-
-            timePercent += moveSpeed / Vector3.Distance(targetPosition, target.position);
+            float zoomSpeed = moveSpeed / 10f;
+            timePercent += zoomSpeed;
             float scale = Mathf.Lerp(startCameraScale, targetScale, timePercent);
             Camera.main.orthographicSize = scale;
-            Debug.Log(scale);
+            //Debug.Log(scale);
 
             yield return null;
         }
-        camIsZooming = false;
+        IsZooming = false;
     }
 
 }
