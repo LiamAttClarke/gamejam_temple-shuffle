@@ -9,6 +9,7 @@ public class Map : MonoBehaviour {
     public Tile alterTile { get; private set; }
 	public int worldSize = 5; // must be odd & greater than 1
 	public bool IsMapMoving { get; set; }
+	public float TileWidth { get; private set; }
 
 	Transform tran;
 
@@ -72,16 +73,16 @@ public class Map : MonoBehaviour {
         }
 		GameObject edgePortalPrefab = (GameObject)Resources.Load ("Prefabs/EdgePortal");
 		// portals
-		float tileWidth = grid[0, 0].Width;
-		float halfTileWidth = tileWidth * 0.5f;
+		TileWidth = grid[0, 0].Width;
+		float halfTileWidth = TileWidth * 0.5f;
 		float offset = 1.3f;
-		float mapEdge = (worldSize * tileWidth) - halfTileWidth;
+		float mapEdge = (worldSize * TileWidth) - halfTileWidth;
 		Quaternion down = Quaternion.Euler(0, 0, 180f);
 		Quaternion right = Quaternion.Euler(0, 0, 270f);
 		Quaternion left = Quaternion.Euler(0, 0, 90f);
 		for (int x = 0; x < worldSize; x++) {
 			// horizontal
-			float posX = (x * tileWidth);
+			float posX = (x * TileWidth);
 			Vector3 portalPos1 = new Vector3(posX - offset, mapEdge, 0);
 			Vector3 portalPos2 = new Vector3(posX + offset, mapEdge, 0);
 			Vector3 portalPos3 = new Vector3(posX - offset, -halfTileWidth, 0);
@@ -103,7 +104,7 @@ public class Map : MonoBehaviour {
 		}
 		for (int y = 0; y < worldSize; y++) {
 			// vertical
-			float posY = (y * tileWidth);
+			float posY = (y * TileWidth);
 			Vector3 portalPos1 = new Vector3(-halfTileWidth, posY + offset, 0);
 			Vector3 portalPos2 = new Vector3(-halfTileWidth, posY - offset, 0);
 			Vector3 portalPos3 = new Vector3(mapEdge, posY + offset, 0);
