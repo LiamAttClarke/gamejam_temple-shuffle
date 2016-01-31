@@ -7,7 +7,6 @@ public class Door : MonoBehaviour {
     public enum DoorState { Unlocked, Locked }
 
     public Direction Orientation;
-    public bool IsPortal { get; private set; }
     public DoorState State {
         get {
             return state;
@@ -47,7 +46,6 @@ public class Door : MonoBehaviour {
     public void UpdateDoorState() {
         switch (Orientation) {
             case Direction.Up:
-                IsPortal = (parent.MapIndexY == map.worldSize - 1) ? true : false;
                 if (parent.MapIndexY + 1 < map.worldSize) {
                     Tile adjacent = map.grid[parent.MapIndexX, parent.MapIndexY + 1];
                     if (adjacent == null) {
@@ -55,10 +53,11 @@ public class Door : MonoBehaviour {
                     } else {
                         State = DoorState.Unlocked;
                     }
+                } else if (parent.MapIndexY + 1 == map.worldSize) {
+                    State = DoorState.Locked;
                 }
                 break;
             case Direction.Down:
-                IsPortal = (parent.MapIndexY == 0) ? true : false;
                 if (parent.MapIndexY - 1 >= 0) {
                     Tile adjacent = map.grid[parent.MapIndexX, parent.MapIndexY - 1];
                     if (adjacent == null) {
@@ -66,10 +65,11 @@ public class Door : MonoBehaviour {
                     } else {
                         State = DoorState.Unlocked;
                     }
+                } else if (parent.MapIndexY - 1 < 0) {
+                    State = DoorState.Locked;
                 }
                 break;
             case Direction.Left:
-                IsPortal = (parent.MapIndexX == 0) ? true : false;
                 if (parent.MapIndexX - 1 >= 0) {
                     Tile adjacent = map.grid[parent.MapIndexX - 1, parent.MapIndexY];
                     if (adjacent == null) {
@@ -77,10 +77,11 @@ public class Door : MonoBehaviour {
                     } else {
                         State = DoorState.Unlocked;
                     }
+                } else if (parent.MapIndexX - 1 < 0) {
+                    State = DoorState.Locked;
                 }
                 break;
             case Direction.Right:
-                IsPortal = (parent.MapIndexX == map.worldSize - 1) ? true : false;
                 if (parent.MapIndexX + 1 < map.worldSize) {
                     Tile adjacent = map.grid[parent.MapIndexX + 1, parent.MapIndexY];
                     if (adjacent == null) {
@@ -88,6 +89,8 @@ public class Door : MonoBehaviour {
                     } else {
                         State = DoorState.Unlocked;
                     }
+                } else if (parent.MapIndexX + 1 == map.worldSize) {
+                    State = DoorState.Locked;
                 }
                 break;
         }
