@@ -5,16 +5,20 @@ public enum Direction { Up, Down, Left, Right }
 
 public class InputController : MonoBehaviour {
 	
-	public enum inputMode { NONE, PLAYER, MAP }
+	public enum inputMode { PLAYER, MAP, MENU }
 	public inputMode mode;
 	
 	Player player;
 	Rigidbody2D playerRb;
 	Map map;
+    bool fire1happening = false;
 	
 	void Awake() {
-		map = GameObject.Find("Map").GetComponent<Map>();
-		mode = inputMode.MAP;
+        GameObject mapGO = GameObject.Find("Map");
+        if (mapGO!=null) {
+            map = mapGO.GetComponent<Map>();
+		}
+        mode = inputMode.MAP;
 	}
 	
 	void Start()
@@ -24,12 +28,44 @@ public class InputController : MonoBehaviour {
 	}
 	
 	void Update () {
+        ModeUpdate();
 		if (mode == inputMode.PLAYER) {
 			PlayerUpdate ();
 		} else if (mode == inputMode.MAP) {
 			TileUpdate();
-		}    
+		}
 	}
+
+    void ModeUpdate()
+    {
+        //debug master mode switch
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ToggleMode();
+        }
+
+        //gameplay mode switch
+        float fire1 = Input.GetAxis("Fire1"); //Input.GetAxis lasts several frames
+        if (fire1 != 0 && !fire1happening)
+        {
+            fire1happening = true;
+            if (player != null)
+            {
+                if (player.isInShuffler && !map.IsMapMoving)
+                {
+                    ToggleMode();
+                }
+            }
+        }
+        if (fire1 == 0)
+        {
+            fire1happening = false;
+        }
+        if (player != null && !player.isInShuffler)
+        {
+            mode = inputMode.PLAYER;
+        }
+    }
 
     void PlayerUpdate()
 	{
@@ -43,6 +79,8 @@ public class InputController : MonoBehaviour {
 	
 	void TileUpdate()
 	{
+        if (map == null) return;
+
 		if (!map.IsMapMoving) {
 			if (Input.GetKeyDown(KeyCode.RightArrow)) 
 			{
@@ -66,4 +104,16 @@ public class InputController : MonoBehaviour {
 			}
 		}	
 	}
+
+    void ToggleMode()
+    {
+        if (mode == inputMode.MAP)
+        {
+            mode = inputMode.PLAYER;
+        }
+        else if (mode == inputMode.PLAYER)
+        {
+            mode = inputMode.MAP;
+        }
+    }
 }
