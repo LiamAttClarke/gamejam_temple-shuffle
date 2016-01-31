@@ -43,8 +43,9 @@ public class CamZoom : MonoBehaviour {
         else if (tile != null)
         {
             targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
-            targetScale = tile.Width * zoomMarginFactor / 100;
+            targetScale = tile.Width * zoomMarginFactor;
         }
+        Debug.Log("scale " + targetScale);
 
         float timePercent = 0f;
 
