@@ -76,10 +76,10 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         Tile enteringTile = other.GetComponent<Tile>();
-        if (enteringTile != null)
-        {
+        if (enteringTile != null) {
             storedTile = enteringTile;
             camZoomer.ZoomTo(storedTile.transform);
+            enteringTile.RevealTile();
         }
     }
 

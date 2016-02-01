@@ -5,13 +5,17 @@ public enum TileType { Void, Alter, Path }
 
 public class Tile : MonoBehaviour {
 
+
+
 	static float tileSpeed = 0.5f;
+    static float shadowFadeSpeed = 0.01f;
 
     public int MapIndexX { get; private set; }
     public int MapIndexY { get; private set; }
     public TileType Type { get; private set; }
 	public float Width { get; private set;}
     public GameObject shadow { get; private set; }
+    public bool IsDiscovered { get; private set; }
     
 	Vector3 targetPosition;
 	Map map;
@@ -71,5 +75,23 @@ public class Tile : MonoBehaviour {
         foreach (Door door in doors) {
             door.UpdateDoorState();
         }
+    }
+
+    public void RevealTile() {
+        StartCoroutine("FadeOut");
+    }
+
+    IEnumerator FadeOut() {
+        if (!IsDiscovered) {
+            var renderer = shadow.GetComponent<SpriteRenderer>();
+            Material sharedMat = renderer.material;
+            renderer.material = new Material(sharedMat);
+            while (renderer.material.color.a != 0) {
+                Color prevColor = renderer.material.color;
+                renderer.material.color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - shadowFadeSpeed);
+                yield return null;
+            }
+        }
+        IsDiscovered = true;
     }
 }
