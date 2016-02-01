@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Platform : MonoBehaviour {
 
     public Sprite platformUp;
     public Sprite platformDown;
     private SpriteRenderer sr;
-    bool active;
+	public bool active { get; private set; }
     public bool persists;
+	public int id;
 
-    enum Kinds { POPS_BACK_UP, STICKS_DOWN }
-    Kinds kind = Kinds.POPS_BACK_UP;
+    public enum Kind { STICKY, POPS_BACK_UP }
+    public Kind kind = Kind.STICKY;
 
     void Awake()
     {
@@ -35,6 +37,19 @@ public class Platform : MonoBehaviour {
         //checks state
         active = false;
         sr.sprite = platformUp;
+
+		//check parent Tile has Puzzle class
+		Tile tile = transform.parent.GetComponent<Tile>();
+		if (tile == null) {
+			Debug.Log("Parent gameobject needs to be Tile for piece: " + gameObject.name);
+			return;
+		}
+		Puzzle puzzle = transform.parent.GetComponent<Puzzle>();
+		if (puzzle == null)
+		{
+			Debug.Log("Puzzle is required on parent tile: " + gameObject.name);
+			return;
+		}
         
     }
 
@@ -51,7 +66,7 @@ public class Platform : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other)
     {
         Player player = other.GetComponent<Player>();
-        if (player != null)
+        if (player != null && kind == Kind.POPS_BACK_UP)
         {
             active = false;
             sr.sprite = platformUp;
