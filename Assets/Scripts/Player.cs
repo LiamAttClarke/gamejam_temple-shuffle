@@ -55,21 +55,11 @@ public class Player : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        //tile stuff
-        Tile leavingTile = other.GetComponent<Tile>();
-        if (leavingTile != null && storedTile != null)
-        {
-            //set player to be child of new tile, because is in one
-            gameObject.transform.parent = storedTile.transform;
-            //Debug.Log("Player child of tile: " + storedTile.name);
-        }
-
         //shuffler stuff
         Shuffler shufflerTriggerable = other.GetComponent<Shuffler>();
         if (shufflerTriggerable != null)
         {
             isInShuffler = false;
-            //Debug.Log("not in shuf");
         }
     }
 
@@ -78,6 +68,7 @@ public class Player : MonoBehaviour
         Tile enteringTile = other.GetComponent<Tile>();
         if (enteringTile != null) {
             storedTile = enteringTile;
+            transform.parent = storedTile.transform;
             camZoomer.ZoomTo(storedTile.transform);
             enteringTile.RevealTile();
         }
