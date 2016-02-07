@@ -62,6 +62,7 @@ public class Map : MonoBehaviour {
                     GameObject tilePrefab = tilePrefabs[tilePrefabsIndex];
                     GameObject tileGameObject = Instantiate(tilePrefab);
 					tileGameObject.transform.parent = tran;
+					tileGameObject.name = tilePrefab.name + "(" + x + "," + y +")";
 					Tile tile = tileGameObject.GetComponent<Tile>();
 					grid[x, y] = tile;
 					tile.Init (TileType.Path, x, y);

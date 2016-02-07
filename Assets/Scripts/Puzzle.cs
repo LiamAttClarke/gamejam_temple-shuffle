@@ -5,19 +5,20 @@ using System.Collections.Generic;
 //all triggers active
 //kinds of triggers
 
-[ExecuteInEditMode]
 public class Puzzle : MonoBehaviour {
 
-    private Platform[] platforms;
-	public List<GameObject> rewards;
+    public Platform[] platforms;
+	public Reward[] rewards;
 	private bool rewarded = false;
 
-    // Use this for initialization
-    [ExecuteInEditMode]
-    void Awake()
+    void Start()
     {
-        UpdateAllPlatforms();
-    }
+		if (platforms.Length == 0)
+		{
+			Debug.Log("Puzzle on |" + transform.name + "| requires at least 1 platform attached.");
+			return;
+		}
+	}
 
 	void Update()
 	{
@@ -28,24 +29,9 @@ public class Puzzle : MonoBehaviour {
 		}
 	}
 
-    //auto seek all Platform objects in 
-    void UpdateAllPlatforms()
-    {
-		List<Platform> platformsList = new List<Platform>();
-        foreach (Transform t in transform)
-        {
-            Platform platform = t.GetComponent<Platform>();
-            if (platform != null)
-            {
-                platformsList.Add(platform);
-				platform.id = platformsList.Count;
-            }
-        }
-        platforms = platformsList.ToArray();
-    }
-
 	bool AllActive()
 	{
+		if (platforms.Length == 0) return false;
 		foreach (Platform platform in platforms)
 		{
 			if (!platform.active) {
@@ -57,12 +43,24 @@ public class Puzzle : MonoBehaviour {
 
 	public void DropRewards()
 	{
-		foreach (GameObject reward in rewards){
-			DropEachReward(reward);
+		int count = 0;
+
+		foreach (Reward reward in rewards)
+		{
+			if (reward != null)
+			{
+				count++;
+				DropEachReward(reward);
+			}
+		}
+		if (rewards.Length == 0 || count == 0)
+		{
+			Debug.Log("Puzzle on |" + transform.name + "| has no rewards.");
+			return;
 		}
 	}
 
-	private void DropEachReward(GameObject reward)
+	private void DropEachReward(Reward reward)
 	{
 		Vector3 dropLocation;
 		Debug.Log(transform.name);

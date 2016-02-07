@@ -85,6 +85,52 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &321793445
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 11481744, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: platforms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.31236029
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -10.8871212
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &476817472
 Prefab:
   m_ObjectHideFlags: 0
@@ -177,6 +223,7 @@ MonoBehaviour:
   alterTilePrefab: {fileID: 136930, guid: e58cc840defdc9241b5f1441d2957744, type: 2}
   tilePrefabs:
   - {fileID: 136930, guid: 40e73c04973a5d24d87a68069f669370, type: 2}
+  - {fileID: 136930, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
   worldSize: 5
   WorldBounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -192,7 +239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1317274964
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1801028077
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,4 +338,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
