@@ -43,20 +43,12 @@ public class Puzzle : MonoBehaviour {
 
 	public void DropRewards()
 	{
-		int count = 0;
-
 		foreach (Reward reward in rewards)
 		{
 			if (reward != null)
 			{
-				count++;
 				DropEachReward(reward);
 			}
-		}
-		if (rewards.Length == 0 || count == 0)
-		{
-			Debug.Log("Puzzle on |" + transform.name + "| has no rewards.");
-			return;
 		}
 	}
 
