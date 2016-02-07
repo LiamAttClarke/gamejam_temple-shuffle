@@ -5,8 +5,6 @@ public enum TileType { Void, Alter, Path }
 
 public class Tile : MonoBehaviour {
 
-
-
 	static float tileSpeed = 0.5f;
     static float shadowFadeSpeed = 0.01f;
 
@@ -14,7 +12,7 @@ public class Tile : MonoBehaviour {
     public int MapIndexY { get; private set; }
     public TileType Type { get; private set; }
 	public float Width { get; private set;}
-    public GameObject shadow { get; private set; }
+    public GameObject shadow { get; set; }
     public bool IsDiscovered { get; private set; }
     
 	Vector3 targetPosition;
@@ -27,7 +25,7 @@ public class Tile : MonoBehaviour {
 		Width = GetBounds().size.x;
         bc = gameObject.AddComponent<BoxCollider2D>();
         bc.isTrigger = true;
-        shadow = transform.Find("Shadow").gameObject;
+
 	}
 
     void Start() {
@@ -38,27 +36,37 @@ public class Tile : MonoBehaviour {
 		Type = tileType;
 		SetMapPosition (mapIndexX, mapIndexY, false);
 		map = GameObject.Find ("Map").GetComponent<Map> ();
+
+		//shadow
+		shadow = (GameObject)Instantiate(Resources.Load("Prefabs/Shadow"), transform.position, Quaternion.identity);
+		shadow.transform.parent = transform;
+		shadow.name = "Shadow";
+		shadow.GetComponent<SpriteRenderer>().sortingOrder = 10;
+		shadow.transform.localScale = GetBounds().size;
 	}
 
     public void SetMapPosition(int x, int y, bool slide) {
         MapIndexX = x;
         MapIndexY = y;
-        targetPosition = new Vector3 (x * Width, y * Width, 0);
+        targetPosition = new Vector3 (x * Width - Width / 2, y * Width - Width / 2, 0);
 		if (slide) {
 			StartCoroutine("MoveToTarget");
 		} else {
-			transform.position = targetPosition;		
+			transform.position = targetPosition;
 		}
 	}
 
 	public Bounds GetBounds() {
         var renderer = GetComponent<Renderer>();
         var combinedBounds = renderer.bounds;
-        var renderers = GetComponentsInChildren<Renderer>();
+		if (transform.localScale.x != 1 || transform.localScale.y != 1 ) {
+			Debug.LogWarning("Warning, does not support parent being scaled to non-1 size. " + renderer.name + " set to " + renderer.transform.localScale);
+		}
+		var renderers = GetComponentsInChildren<Renderer>();
         foreach (var render in renderers) {
-            if (render != renderer) combinedBounds.Encapsulate(render.bounds);
+			if (render != renderer) combinedBounds.Encapsulate(render.bounds);
         }
-        return combinedBounds;
+        return combinedBounds; 
 	}
 	
 	IEnumerator MoveToTarget () {
