@@ -24,6 +24,7 @@ public class Tile : MonoBehaviour {
 	void Awake() {
 		Width = GetBounds().size.x;
         bc = gameObject.AddComponent<BoxCollider2D>();
+		bc.size = GetBounds().size;
         bc.isTrigger = true;
 
 	}
