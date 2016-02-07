@@ -130,15 +130,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018114, guid: 015b465f3d68dbe439995995055203db, type: 2}
       propertyPath: m_BackGroundColor.r
-      value: 0
+      value: .331971109
       objectReference: {fileID: 0}
     - target: {fileID: 2018114, guid: 015b465f3d68dbe439995995055203db, type: 2}
       propertyPath: m_BackGroundColor.g
-      value: 0
+      value: .321799308
       objectReference: {fileID: 0}
     - target: {fileID: 2018114, guid: 015b465f3d68dbe439995995055203db, type: 2}
       propertyPath: m_BackGroundColor.b
-      value: 0
+      value: .45588237
       objectReference: {fileID: 0}
     - target: {fileID: 2018114, guid: 015b465f3d68dbe439995995055203db, type: 2}
       propertyPath: m_ClearFlags
