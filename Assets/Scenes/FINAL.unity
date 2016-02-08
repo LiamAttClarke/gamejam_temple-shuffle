@@ -92,10 +92,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11481744, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
-      propertyPath: platforms.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.31236029
@@ -126,7 +122,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416876, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70f18ccaefebe3349b028e68663f3160, type: 2}
@@ -299,7 +295,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &1801028077
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,6 +98,10 @@ public class Tile : MonoBehaviour {
             while (renderer.material.color.a != 0) {
                 Color prevColor = renderer.material.color;
                 renderer.material.color = new Color(prevColor.r, prevColor.g, prevColor.b, prevColor.a - shadowFadeSpeed);
+				if (renderer.material.color.a <= 0)
+				{
+					shadow.SetActive(false);
+				}
                 yield return null;
             }
         }

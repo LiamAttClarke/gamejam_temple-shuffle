@@ -11,7 +11,7 @@ public class Platform : MonoBehaviour {
     public bool persists;
 	public int id;
 
-    public enum Kind { STICKY, POPS_BACK_UP }
+    public enum Kind { STICKY, SPRINGY, TIMEY }
     public Kind kind = Kind.STICKY;
 
     void Awake()
@@ -38,16 +38,11 @@ public class Platform : MonoBehaviour {
         active = false;
         sr.sprite = platformUp;
 
-		//check parent Tile has Puzzle class
-		Tile tile = transform.parent.GetComponent<Tile>();
-		if (tile == null) {
-			Debug.Log("Parent gameobject needs to be Tile for piece: " + gameObject.name);
-			return;
-		}
+		//check parent has Puzzle class
 		Puzzle puzzle = transform.parent.GetComponent<Puzzle>();
 		if (puzzle == null)
 		{
-			Debug.Log("Puzzle is required on parent tile: " + gameObject.name);
+			Debug.Log("Parent gameobject needs to have Puzzle added for platform: |" + gameObject.name +"| to work");
 			return;
 		}
         
@@ -55,8 +50,8 @@ public class Platform : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>();
-        if (player != null)
+		Physical physical = other.GetComponent<Physical>();
+		if (physical != null)
         {
             active = true;
             sr.sprite = platformDown;
@@ -65,12 +60,16 @@ public class Platform : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>();
-        if (player != null && kind == Kind.POPS_BACK_UP)
-        {
-            active = false;
-            sr.sprite = platformUp;
-        }
+		Physical[] physicals = GameObject.FindObjectsOfType<Physical>();
+		foreach (Physical physical in physicals)
+		{
+			if (kind == Kind.SPRINGY && other.gameObject == physical.gameObject && physical.GetType().IsSubclassOf(typeof(Physical)))
+			{
+				//only works for any one physical leaving, not when any stay and one leaves
+				active = false;
+				sr.sprite = platformUp;
+			}
+		}
     }
 
 }

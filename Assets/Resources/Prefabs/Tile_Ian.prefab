@@ -236,7 +236,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.2470951, y: 28.8563919, z: 0}
+  m_LocalPosition: {x: -2.31236029, y: -10.8871212, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 453678}
@@ -599,10 +599,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d85ce40349cd64ba59dec4221f224b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platforms:
+  - {fileID: 11465004}
+  - {fileID: 11407158}
+  - {fileID: 11499118}
   rewards:
-  - {fileID: 176374, guid: 56342e8550d7da942864271b41aaf9ce, type: 2}
-  - {fileID: 137676, guid: 80546053e6b3d2848bb54b817dee81ce, type: 2}
-  - {fileID: 176374, guid: 56342e8550d7da942864271b41aaf9ce, type: 2}
+  - {fileID: 11430948, guid: 56342e8550d7da942864271b41aaf9ce, type: 2}
+  - {fileID: 11430948, guid: 56342e8550d7da942864271b41aaf9ce, type: 2}
+  - {fileID: 11430948, guid: 56342e8550d7da942864271b41aaf9ce, type: 2}
 --- !u!114 &11499118
 MonoBehaviour:
   m_ObjectHideFlags: 1

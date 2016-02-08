@@ -7,7 +7,7 @@ using System.Collections;
 //rb.drag below slows player down
 //Edit > Project > Input > Horizontal | Vertical > Gravity = ++## slows down trail off of input 
 //recommend at least 3:1 ratio of moveForce to drag for snappy controls.  3 * moveForce = 1 * drag.
-public class Player : MonoBehaviour
+public class Player : Physical
 {
 
     public float moveForce = 40f;
@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-
         InitPlayer();
 
     }

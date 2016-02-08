@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof (Collider))]
-public class Door : MonoBehaviour {
+public class Door : Reward {
     public enum DoorState { Unlocked, Locked }
 
     public Direction Orientation;

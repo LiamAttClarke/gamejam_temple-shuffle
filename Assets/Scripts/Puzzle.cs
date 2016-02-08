@@ -11,8 +11,14 @@ public class Puzzle : MonoBehaviour {
 	public Reward[] rewards;
 	private bool rewarded = false;
 
+	void Awake()
+	{
+
+	}
+
     void Start()
     {
+		LockDoors();
 		if (platforms.Length == 0)
 		{
 			Debug.Log("Puzzle on |" + transform.name + "| requires at least 1 platform attached.");
@@ -25,7 +31,7 @@ public class Puzzle : MonoBehaviour {
 		if (AllActive() && !rewarded)
 		{
 			rewarded = true;
-			DropRewards();
+			GiveRewards();
 		}
 	}
 
@@ -41,13 +47,21 @@ public class Puzzle : MonoBehaviour {
 		return true;
 	}
 
-	public void DropRewards()
+	public void GiveRewards()
 	{
 		foreach (Reward reward in rewards)
 		{
-			if (reward != null)
+			if (reward.GetType() == typeof(Door))
+			{
+				OpenDoor((Door)reward);
+			}
+			else if (reward.GetType() != typeof(Door))
 			{
 				DropEachReward(reward);
+			}
+			else if (reward != null)
+			{
+
 			}
 		}
 	}
@@ -55,28 +69,42 @@ public class Puzzle : MonoBehaviour {
 	private void DropEachReward(Reward reward)
 	{
 		Vector3 dropLocation;
-		Debug.Log(transform.name);
-
-		Transform playerTR = transform.FindChild("Player").transform;
-		foreach (Transform t in playerTR) {
-			Debug.Log(t.name);
-		}
-		Player player = null;
-		if (playerTR != null) player = transform.GetComponent<Player>();
+		Transform playerTransform = transform.FindChild("Player");
+		Player player = (playerTransform != null) ? playerTransform.GetComponent<Player>() : null;
+		
 		Tile tile = gameObject.GetComponent<Tile>();
+
 		if (player != null) {
-			Debug.Log("QUACK");
-			dropLocation = player.transform.position += new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), transform.position.z);
+			Vector3 pos = player.transform.position;
+			dropLocation = pos += new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), transform.position.z);
 		}
 		else {
-			Debug.Log("MOO");
 			dropLocation = transform.position;
 		}
-		Instantiate(reward, dropLocation, Quaternion.identity);
+		Reward rewardGo = (Reward)Instantiate(reward, dropLocation, Quaternion.identity);
+		rewardGo.transform.parent = transform;
+		
+		SpriteRenderer rewardSr = rewardGo.GetComponent<SpriteRenderer>();
+		Debug.Log(rewardSr.sortingOrder);
+		rewardSr = Util.SetTopOrder(transform, rewardSr);
+		Debug.Log(rewardSr.sortingOrder);
+
 	}
 
-	public int numPlatforms()
+	private void OpenDoor(Door door)
 	{
-		return platforms.Length;
+		door.State = Door.DoorState.Unlocked;
 	}
+
+	private void LockDoors()
+	{
+		foreach (Reward reward in rewards)
+		{
+			if (reward.GetType() == typeof(Door))
+			{
+				((Door)reward).State = Door.DoorState.Locked;
+			}
+		}
+	}
+
 }
