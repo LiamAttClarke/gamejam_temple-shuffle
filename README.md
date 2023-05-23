@@ -1,4 +1,4 @@
-# Temple Shuffle
+# GameJam: Temple Shuffle
 Submission for [Global Game Jam](https://globalgamejam.org/) (2016).
 
 ## Credit:
